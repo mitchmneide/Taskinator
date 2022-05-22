@@ -46,6 +46,7 @@ for (var i = 0; i < tasks.length; i++) {
         tasks[i].type = taskType;
     }
 }
+saveTasks();
     // remove data attribute from form
     formEl.removeAttribute("data-task-id");
     // update formEl button to go back to Add task instead of edit task
@@ -70,6 +71,7 @@ for (var i = 0; i < tasks.length; i++) {
         taskDataObj.id=taskIdCounter;
         tasks.push(taskDataObj);
         taskIdCounter++;
+        saveTasks();
     };
     var taskButtonHandler = function(event) {
         console.log(event.target);
@@ -151,6 +153,7 @@ for (var i = 0; i < tasks.length; i++) {
         }
         // reassign tasks array to be the same as updatedTaskArr
         tasks = updatedTaskArr;
+        saveTasks();
     };
     var taskStatusChangeHandler = function(event) {
        console.log(event.target);
@@ -174,11 +177,14 @@ for (var i = 0; i < tasks.length; i++) {
     for (var i = 0; i< tasks.length; i++) {
         if (tasks[i].id === parseInt(taskId)) {
             tasks[i].status = statusValue;
-            console.log(tasks);
+            
         }
     }
+    saveTasks();
 };
-   
+var saveTasks = function() {
+localStorage.setItem("tasks", JSON.stringify(tasks));
+};
 // formEl.addEventListener("submit", createTaskHandler); 
 formEl.addEventListener ("submit" , taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
